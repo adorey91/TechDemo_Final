@@ -8,6 +8,7 @@ public class Player : Character
 {
     public static Player current;
     [SerializeField] HealthBarUI healthBarUI;
+    [SerializeField] PauseMenu pauseMenu;
     private Vector2 playerInput;
     private Rigidbody rb;
 
@@ -39,6 +40,8 @@ public class Player : Character
     public void Awake()
     {
         current = this;
+        pauseMenu = FindAnyObjectByType<PauseMenu>();
+
     }
 
     private void Start()
@@ -56,10 +59,13 @@ public class Player : Character
 
     private void FixedUpdate()
     {
+        
         MovePlayer();
         if (playerInput != null)
             moveSpeed = walkSpeed;
     }
+
+
     private void MovePlayer()
     {
         Vector3 cameraForward = playerCamera.transform.forward;
@@ -86,7 +92,7 @@ public class Player : Character
 
     public void Look(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && !pauseMenu.paused)
         {
             Vector2 mouseDelta = context.ReadValue<Vector2>();
 

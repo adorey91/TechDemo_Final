@@ -65,9 +65,9 @@ public class PlayerMovement : MonoBehaviour
         if (!isRunning && !isCrouched)
             moveSpeed = walkSpeed;
 
-        //if (waypointFollower.playerOn)
-        //    MovePlayerOnPlatform();
-        //else
+        if (waypointFollower.playerOn)
+            MovePlayerOnPlatform();
+        else
             rb.MovePosition(rb.position + movementVector.normalized * moveSpeed * Time.fixedDeltaTime);
     }
 
@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool isGrounded()
     {
-        return Physics.CheckSphere(transform.position, 0.1f, ground);
+        return Physics.CheckSphere(transform.position, 0.1f);
     }
 
     void MovePlayerOnPlatform()

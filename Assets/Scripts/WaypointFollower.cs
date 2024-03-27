@@ -4,53 +4,63 @@ using UnityEngine;
 
 public class WaypointFollower : MonoBehaviour
 {
-   [SerializeField] private GameObject[] waypoints;
-    private int currentWaypointIndex = 0;
+    [SerializeField] private Vector3 startPos;
+    [SerializeField] private Vector3 endPos;
     private Vector3 destination;
+    [SerializeField] private int moveCount;
 
     public float speed = 1f;
-
     public bool playerOn;
+    public bool startPlatform;
 
-    void FixedUpdate()
+    private void Start()
     {
-        if(playerOn)
-        {
-            if(Vector3.Distance(transform.position, GetDestination()) < 0.1f)
-            {
-                currentWaypointIndex++;
-
-                if(currentWaypointIndex >= waypoints.Length)
-                    currentWaypointIndex = 0;
-            }
-        }
-
-
-        transform.position = Vector3.MoveTowards(transform.position, waypoints[currentWaypointIndex].transform.position, speed * Time.deltaTime);
+        startPos = transform.position;
+        endPos = new Vector3(-39.7f, 7.5f, 13.9f);
     }
 
-    public void OnCollisionEnter(Collision collision)
+    private void Update()
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (startPlatform && playerOn)
+            MovePlatform();
+    }
+
+    public void MovePlatform()
+    {
+        if (Vector3.Distance(transform.position, GetDestination()) < 0.1f)
+        {
+            moveCount++;
+            startPlatform = false;
+        }
+        transform.position = Vector3.MoveTowards(transform.position, GetDestination(), speed * Time.deltaTime);
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Player"))
         {
             playerOn = true;
-            collision.transform.SetParent(transform);
+            other.transform.SetParent(transform);
         }
     }
 
-    public void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            playerOn = false;
-            collision.transform.SetParent(null);
-
-        }
+        playerOn = false;
+        other.transform.SetParent(null);
     }
 
     public Vector3 GetDestination()
     {
-        destination = waypoints[currentWaypointIndex].transform.position;
+        if (moveCount > 1)
+            moveCount = 0;
+
+        if (moveCount == 0)
+            destination = endPos;
+        else if (moveCount == 1)
+            destination = startPos;
+
         return destination;
     }
 }

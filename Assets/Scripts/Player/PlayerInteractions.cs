@@ -14,6 +14,7 @@ public class PlayerInteractions : MonoBehaviour
     public ResetBuildings resetBuildings;
     public FallControl fallControl;
     public GravityControl gravityControl;
+    WaypointFollower waypointFollower;
 
 
     [Header("Switch Settings")]
@@ -28,11 +29,13 @@ public class PlayerInteractions : MonoBehaviour
     public void Start()
     {
         isGamePaused = false;
+        waypointFollower = FindObjectOfType<WaypointFollower>();
     }
 
     public void Update()
     {
         CheckLevers();
+        PlatformCheck();
     }
 
     public void Interact(InputAction.CallbackContext context)
@@ -45,6 +48,8 @@ public class PlayerInteractions : MonoBehaviour
                 fallControl.fallApartNow = true;
             if (gravity)
                 gravityControl.turnOffGravity = true;
+            if (waypointFollower.playerOn)
+                waypointFollower.startPlatform = true;
         }
     }
 
@@ -59,6 +64,15 @@ public class PlayerInteractions : MonoBehaviour
         {
             pauseMenu.resumeGame();
             isGamePaused = false;
+        }
+    }
+
+    private void PlatformCheck()
+    {
+        if(waypointFollower.playerOn && !waypointFollower.startPlatform)
+        {
+            UseText.SetText("Press Enter To Activate");
+            UseText.gameObject.SetActive(true);
         }
     }
 

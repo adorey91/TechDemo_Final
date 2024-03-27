@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pausePanel;
+    [SerializeField] InputMaster playerControls;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject controlsPanel;
-
+    public bool paused;
 
     public void pauseGame()
     {
+        paused = true;
         pausePanel.SetActive(true);
         controlsPanel.SetActive(false); 
         rb.isKinematic = true;
@@ -23,6 +26,7 @@ public class PauseMenu : MonoBehaviour
 
     public void resumeGame()
     {
+        paused = false; 
         pausePanel.SetActive(false);
         controlsPanel.SetActive(false);
         rb.isKinematic = false;
