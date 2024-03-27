@@ -21,8 +21,10 @@ public class Player : Character
     [Header("Movement Settings")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float walkSpeed;
+    [SerializeField] private float jumpForce;
     [SerializeField] private float moveSpeedMultipler;
     private bool isRunning;
+    [SerializeField] LayerMask ground;
 
     [Header("View Settings")]
     [SerializeField] private float mouseSensitivity;
@@ -30,7 +32,8 @@ public class Player : Character
     [SerializeField] private Camera playerCamera;
     private float verticalRotation;
 
-    //[SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject controlsPanel;
     //[SerializeField] private GameObject gameOverPanel;
 
     public void Awake()
@@ -44,18 +47,19 @@ public class Player : Character
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         curHp = maxHp;
-        healthBarUI.Start();
+       // healthBarUI.Start();
     }
     private void Update()
     {
-        healthPercentage.text = $"{((float)curHp / (float)maxHp) * 100} %";
+       // healthPercentage.text = $"{((float)curHp / (float)maxHp) * 100} %";
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
+        if (playerInput != null)
+            moveSpeed = walkSpeed;
     }
-
     private void MovePlayer()
     {
         Vector3 cameraForward = playerCamera.transform.forward;
@@ -96,6 +100,19 @@ public class Player : Character
         }
     }
 
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (context.performed && isGrounded())
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
+    bool isGrounded()
+    {
+        return Physics.CheckSphere(transform.position, 0.1f, ground);
+    }
+
     public void Run(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -106,19 +123,19 @@ public class Player : Character
 
     public void Fire(InputAction.CallbackContext context)
     {
-        if(context.performed)
+        if (context.performed)
         {
-            if(!alreadyAttacked)
+            if (!alreadyAttacked)
             {
                 Vector3 fireDirection = playerCamera.transform.forward;
-                Vector3 spawnPosition = transform.position + fireDirection * 1f; 
+                Vector3 spawnPosition = transform.position + fireDirection * 1f;
 
                 GameObject proj = Instantiate(attackPrefab, spawnPosition, Quaternion.identity);
                 proj.transform.rotation = Quaternion.LookRotation(fireDirection);
                 proj.GetComponent<Projectile>().Setup(this);
                 alreadyAttacked = true;
                 Invoke(nameof(ResetAttack), timeBetweenAttacks);
-            }   
+            }
         }
     }
 

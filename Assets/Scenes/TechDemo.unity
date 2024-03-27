@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44825715, g: 0.49828702, b: 0.5755856, a: 1}
+  m_IndirectSpecularColor: {r: 0.44825655, g: 0.49828655, b: 0.5755845, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -306,8 +306,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 610.625, y: -40}
-  m_SizeDelta: {x: 168.75, y: 70}
+  m_AnchoredPosition: {x: 445, y: -40}
+  m_SizeDelta: {x: 260, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &38023476 stripped
 Transform:
@@ -482,8 +482,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 89.375, y: -40}
-  m_SizeDelta: {x: 168.75, y: 70}
+  m_AnchoredPosition: {x: 1065, y: -40}
+  m_SizeDelta: {x: 260, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &55274605
 MonoBehaviour:
@@ -637,7 +637,7 @@ Transform:
   m_GameObject: {fileID: 71339206}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0.061, y: 0.714, z: 0.092}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1863,16 +1863,16 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 55274604}
   - {fileID: 537488979}
-  - {fileID: 1097386555}
   - {fileID: 36256432}
+  - {fileID: 1097386555}
+  - {fileID: 55274604}
   m_Father: {fileID: 1317888031}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 50}
-  m_SizeDelta: {x: 700, y: 80}
+  m_SizeDelta: {x: 1200, y: 80}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &226489677
 MonoBehaviour:
@@ -1892,7 +1892,7 @@ MonoBehaviour:
     m_Top: 5
     m_Bottom: 5
   m_ChildAlignment: 4
-  m_Spacing: 5
+  m_Spacing: 50
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -3010,8 +3010,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 263.125, y: -40}
-  m_SizeDelta: {x: 168.75, y: 70}
+  m_AnchoredPosition: {x: 135, y: -40}
+  m_SizeDelta: {x: 260, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &537488980
 MonoBehaviour:
@@ -4460,8 +4460,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 176.25, y: -40}
-  m_SizeDelta: {x: 342.5, y: 70}
+  m_AnchoredPosition: {x: 547.5, y: -40}
+  m_SizeDelta: {x: 295, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &954653697
 MonoBehaviour:
@@ -4586,8 +4586,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 954653696}
   - {fileID: 1106696571}
+  - {fileID: 954653696}
   m_Father: {fileID: 1854996468}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -4613,7 +4613,7 @@ MonoBehaviour:
     m_Top: 5
     m_Bottom: 5
   m_ChildAlignment: 4
-  m_Spacing: 5
+  m_Spacing: 100
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -5171,8 +5171,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 436.875, y: -40}
-  m_SizeDelta: {x: 168.75, y: 70}
+  m_AnchoredPosition: {x: 755, y: -40}
+  m_SizeDelta: {x: 260, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1097386556
 MonoBehaviour:
@@ -5304,8 +5304,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 523.75, y: -40}
-  m_SizeDelta: {x: 342.5, y: 70}
+  m_AnchoredPosition: {x: 152.5, y: -40}
+  m_SizeDelta: {x: 295, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1106696572
 MonoBehaviour:
@@ -6089,7 +6089,7 @@ GameObject:
   - component: {fileID: 1292031435}
   - component: {fileID: 1292031433}
   - component: {fileID: 1292031432}
-  - component: {fileID: 1292031436}
+  - component: {fileID: 1292031438}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -6119,7 +6119,7 @@ CapsuleCollider:
   m_Radius: 0.6
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1292031431
 Transform:
   m_ObjectHideFlags: 0
@@ -6129,7 +6129,7 @@ Transform:
   m_GameObject: {fileID: 1292031427}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.47541124, z: -0, w: 0.8797638}
-  m_LocalPosition: {x: 0.29, y: 0, z: 0.29}
+  m_LocalPosition: {x: 0.29, y: 1, z: 0.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6178,8 +6178,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1292031436}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+      - m_Target: {fileID: 1292031438}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: Move
         m_Mode: 0
         m_Arguments:
@@ -6194,8 +6194,8 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1292031436}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+      - m_Target: {fileID: 1292031438}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: Look
         m_Mode: 0
         m_Arguments:
@@ -6209,13 +6209,25 @@ MonoBehaviour:
     m_ActionId: e47e6cb0-e004-40b0-8e55-bae9aadee6a8
     m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1292031438}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Fire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 4e009d93-92f6-4057-9b44-6b5717828e8e
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1292031436}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+      - m_Target: {fileID: 1292031438}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: Jump
         m_Mode: 0
         m_Arguments:
@@ -6230,8 +6242,8 @@ MonoBehaviour:
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1292031436}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+      - m_Target: {fileID: 1292031438}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: Run
         m_Mode: 0
         m_Arguments:
@@ -6246,7 +6258,7 @@ MonoBehaviour:
     m_ActionName: Player/Run[/Keyboard/shift]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1292031436}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: Crouch
         m_Mode: 0
@@ -6324,32 +6336,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!114 &1292031436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1292031427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21c43d829542271488bd539406683c50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0
-  walkSpeed: 5
-  jumpForce: 4
-  crouchHeight: 1.3
-  standingHeight: 2
-  ground:
-    serializedVersion: 2
-    m_Bits: 0
-  mouseSensitivity: 0.2
-  upDownLimit: 60
-  playerCamera: {fileID: 71339209}
-  waypointFollower: {fileID: 0}
-  pausePanel: {fileID: 1317888028}
-  controlsPanel: {fileID: 1854996467}
 --- !u!114 &1292031437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6372,6 +6358,36 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   pauseMenu: {fileID: 872164212}
+--- !u!114 &1292031438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292031427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f401e5113a055394dbc45c37baf1a47b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curHp: 0
+  maxHp: 100
+  healthBarUI: {fileID: 0}
+  healthPercentage: {fileID: 0}
+  attackPrefab: {fileID: 7005957522399575909, guid: c1943b602e01df340a753bc9181883e9, type: 3}
+  timeBetweenAttacks: 0.5
+  moveSpeed: 0
+  walkSpeed: 4
+  jumpForce: 2
+  moveSpeedMultipler: 2
+  ground:
+    serializedVersion: 2
+    m_Bits: 0
+  mouseSensitivity: 0.3
+  upDownLimit: 60
+  playerCamera: {fileID: 71339209}
+  pausePanel: {fileID: 1317888028}
+  controlsPanel: {fileID: 1854996467}
 --- !u!4 &1301502863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4088236801922610, guid: 251842d454826b847ab2f33fb0c67933, type: 3}
@@ -6465,7 +6481,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -40, y: 500}
+  m_SizeDelta: {x: -200, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1310361138
 MonoBehaviour:
@@ -6609,7 +6625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.59607846}
+  m_Color: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 0.59607846}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6909,7 +6925,7 @@ Transform:
   m_GameObject: {fileID: 1374848432}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
