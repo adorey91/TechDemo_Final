@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class FallControl : LeverController
 {
-    public AudioSource fallAudio;
-
     public void FallApart()
     {
         if (!leverRotated)
         {
             ResetOtherLever();
             MoveLever(leverRotationAngle);
+            PlayBuildingAudio();
             leverRotated = true;
-            fallAudio.Play();
 
             for (int i = 0; i < manager.MazeRangeList.Count; i++)
             {

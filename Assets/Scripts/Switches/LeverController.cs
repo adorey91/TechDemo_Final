@@ -13,6 +13,12 @@ public class LeverController : MonoBehaviour
     private bool rotating;
     internal Quaternion leverRotation;
 
+    [Header("Audio Settings")]
+    public AudioClip buildingSound;
+    public AudioClip switchSound;
+    public AudioSource buildingAudioSource;
+    public AudioSource switchAudioSource;
+
 
     [Header("Scripts Referenced")]
     internal GameManager manager;
@@ -32,6 +38,18 @@ public class LeverController : MonoBehaviour
     public void MoveLever(float targetAngle)
     {
         StartCoroutine(RotateLever(targetAngle));
+    }
+
+    public void PlayBuildingAudio()
+    {
+        buildingAudioSource.clip = buildingSound;
+        buildingAudioSource.Play();
+    }
+
+    public void PlaySwitchAudio()
+    {
+        switchAudioSource.clip = switchSound;
+        switchAudioSource.Play();
     }
 
     IEnumerator RotateLever(float targetAngle)

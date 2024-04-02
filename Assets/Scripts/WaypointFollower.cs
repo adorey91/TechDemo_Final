@@ -48,7 +48,6 @@ public class WaypointFollower : MonoBehaviour
             platformSource.clip = platformNoise;
             platformSource.Play();
             isAudioPlaying = true;
-            platformSource.volume = 0.15f;
             platformSource.pitch = 0.19f;
             platformSource.loop = true;
         }

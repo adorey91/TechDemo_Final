@@ -6,11 +6,13 @@ public class Respawn : MonoBehaviour
 {
     public GameObject player;
     private SavePosition savePos;
+    AudioSource respawnAudioSource;
 
     public void Start()
     {
         player = GameObject.Find("Player");
         savePos = player.GetComponent<SavePosition>();
+        respawnAudioSource = GetComponent<AudioSource>();
     }
 
 
@@ -18,7 +20,14 @@ public class Respawn : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            player.transform.position = savePos.playerPosition;
+            StartCoroutine(PlayAudioThenRespawn());
         }
+    }
+
+    IEnumerator PlayAudioThenRespawn()
+    {
+        respawnAudioSource.Play ();
+        yield return new WaitUntil(() => respawnAudioSource.time >= respawnAudioSource.clip.length);
+        player.transform.position = savePos.playerPosition;
     }
 }

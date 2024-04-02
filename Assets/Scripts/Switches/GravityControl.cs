@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class GravityControl : LeverController
 {
-    [Header("Audio")]
-    public AudioSource gravityAudio;
-
     public void TurnOffGravity()
     {
         if (!leverRotated)
         {
             ResetOtherLever();
             MoveLever(leverRotationAngle);
-            gravityAudio.Play();
+            PlayBuildingAudio();
             leverRotated = true;
 
             for(int i = 0; i <manager.MazeRangeList.Count; i++)

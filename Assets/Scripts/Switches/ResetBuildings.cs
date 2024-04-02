@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class ResetBuildings : LeverController
 {
-    [Header("Reset Settings")]
-    public AudioSource resetAudio;
-
     public void DestroyBuildings()
     {
         if (!leverRotated)
@@ -15,7 +12,7 @@ public class ResetBuildings : LeverController
             ResetOtherLevers();
             ResetPlatform();
             manager.ClearLists();
-            resetAudio.Play();
+            PlayBuildingAudio();
             leverRotated = true;
 
             if (manager.MazeRangeInstance != null)
