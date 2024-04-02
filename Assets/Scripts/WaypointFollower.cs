@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class WaypointFollower : MonoBehaviour
 {
-    [SerializeField] private Vector3 startPos;
-    [SerializeField] private Vector3 endPos;
+    private Vector3 startPos;
+    private Vector3 endPos;
     private Vector3 destination;
-    [SerializeField] private int moveCount;
+    private int moveCount;
 
     public float speed = 1f;
-    public bool playerOn;
-    public bool startPlatform;
+    internal bool playerOn;
+    internal bool startPlatform;
+    internal bool movingPlatform = false;
+    [SerializeField] AudioClip platformNoise;
+    [SerializeField] AudioSource platformSource;
+    bool isAudioPlaying = false;
 
     private void Start()
     {
@@ -22,7 +26,12 @@ public class WaypointFollower : MonoBehaviour
     private void Update()
     {
         if (startPlatform && playerOn)
+        {
             MovePlatform();
+            movingPlatform = true;
+        }
+        else
+            movingPlatform = false;
     }
 
     public void MovePlatform()
@@ -30,7 +39,18 @@ public class WaypointFollower : MonoBehaviour
         if (Vector3.Distance(transform.position, GetDestination()) < 0.1f)
         {
             moveCount++;
+            platformSource.Stop();
             startPlatform = false;
+            isAudioPlaying = false;
+        }
+        else if (!isAudioPlaying)
+        {
+            platformSource.clip = platformNoise;
+            platformSource.Play();
+            isAudioPlaying = true;
+            platformSource.volume = 0.15f;
+            platformSource.pitch = 0.19f;
+            platformSource.loop = true;
         }
         transform.position = Vector3.MoveTowards(transform.position, GetDestination(), speed * Time.deltaTime);
     }
@@ -38,7 +58,7 @@ public class WaypointFollower : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             playerOn = true;
             other.transform.SetParent(transform);

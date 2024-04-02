@@ -42,19 +42,7 @@ public class Controller : MonoBehaviour
     {
             Vector3 dirToPlayer = transform.position - target.position;
             Vector3 newPos = transform.position + dirToPlayer.normalized * enemyDistanceRun;
-            Debug.Log("New position: " + newPos.ToString());
             MoveToPosition(newPos);
        
     }
-
-    //public void SearchMovement(Vector3 lastKnownPlayerPosition, float searchRange)
-    //{
-    //    Vector3 randomDirection = Random.insideUnitSphere * searchRange;
-    //    randomDirection += lastKnownPlayerPosition;
-    //    Debug.Log(randomDirection.ToString());
-    //    NavMeshHit hit;
-    //    NavMesh.SamplePosition(randomDirection, out hit, searchRange, NavMesh.AllAreas);
-
-    //    movePoint = hit.position;
-    //}
 }

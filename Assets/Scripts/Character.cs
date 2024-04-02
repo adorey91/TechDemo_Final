@@ -14,7 +14,6 @@ public class Character : MonoBehaviour
     public event UnityAction onTakeDamage; //invokes event
     public event UnityAction onHeal;
 
-
     public void TakeDamage(int damageToTake)
     {
         curHp -= damageToTake;
@@ -29,7 +28,6 @@ public class Character : MonoBehaviour
         onHeal?.Invoke();
         if (curHp >= maxHp)
             curHp = maxHp;
-
     }
 
     public void Die()

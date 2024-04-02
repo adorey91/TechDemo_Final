@@ -22,7 +22,8 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private Transform Camera;
     [SerializeField] private float MaxUseDistance = 5f;
     [SerializeField] private LayerMask UseLayers;
-
+    [SerializeField] float DistanceFromCamera;
+    
     private bool isGamePaused;
     public PauseMenu pauseMenu;
 
@@ -69,10 +70,15 @@ public class PlayerInteractions : MonoBehaviour
 
     private void PlatformCheck()
     {
-        if(waypointFollower.playerOn && !waypointFollower.startPlatform)
+        if (waypointFollower.playerOn && !waypointFollower.startPlatform)
         {
             UseText.SetText("Press Enter To Activate");
             UseText.gameObject.SetActive(true);
+
+            // Set the position of UseText to be in front of the camera & rotation to camera
+            Vector3 positionOffset = Camera.forward * DistanceFromCamera;
+            UseText.transform.position = Camera.position + positionOffset;
+            UseText.transform.rotation = Quaternion.LookRotation(Camera.forward);
         }
     }
 
@@ -84,7 +90,7 @@ public class PlayerInteractions : MonoBehaviour
             {
                 if (!lever.IsLeverRotated())
                 {
-                    UseText.SetText("Press Enter To Activate");
+                    UseText.SetText("");
                     UseText.gameObject.SetActive(true);
                     Vector3 midpoint = (hit.point + Camera.position) * 0.5f;
                     UseText.transform.position = midpoint;
@@ -93,18 +99,21 @@ public class PlayerInteractions : MonoBehaviour
                     string leverAsString = lever.ToString();
                     if (leverAsString == "TurnOffGravity (GravityControl)")
                     {
+                        UseText.SetText("Press Enter \nTo Turn Off Gravity \nto Buildings");
                         gravity = true;
                         reset = false;
                         fall = false;
                     }
                     if (leverAsString == "ResetSwitch (ResetBuildings)")
                     {
+                        UseText.SetText("Press Enter To \nReset Buildings");
                         reset = true;
                         gravity = false;
                         fall = false;
                     }
                     if (leverAsString == "FallApart (FallControl)")
                     {
+                        UseText.SetText("Press Enter To Watch\n Buildings Fall Apart");
                         fall = true;
                         reset = false;
                         gravity = false;
@@ -112,11 +121,11 @@ public class PlayerInteractions : MonoBehaviour
                 }
             }
         }
-            else
-            {
-                UseText.gameObject.SetActive(false);
-                resetBuildings.lever.transform.rotation = resetBuildings.leverRotation;
-                resetBuildings.leverRotated = false;
-            }
+        else
+        {
+            UseText.gameObject.SetActive(false);
+            resetBuildings.lever.transform.rotation = resetBuildings.leverRotation;
+            resetBuildings.leverRotated = false;
+        }
     }
 }

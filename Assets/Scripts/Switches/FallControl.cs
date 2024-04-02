@@ -7,8 +7,7 @@ public class FallControl : LeverController
     public GravityControl gravityScript;
     public bool fallApartNow;
     public GameObject fallLever;
-
-    public GameObject fallText;
+    public AudioSource fallAudio;
 
     public void Update()
     {
@@ -16,6 +15,7 @@ public class FallControl : LeverController
         {
             ResetOtherLever();
             MoveLever(50);
+            fallAudio.Play();
 
             for (int i = 0; i < gravityScript.RangeList.Count; i++)
             {
@@ -28,16 +28,12 @@ public class FallControl : LeverController
                 gravityScript.MazeList[i].useGravity = true;
             }
         }
-        if(leverRotated == true)
-            fallText.SetActive(true);
     }
 
-   
     void ResetOtherLever()
     {
         gravityScript.lever.transform.rotation = gravityScript.leverRotation;
         gravityScript.turnOffGravity = false;
         gravityScript.leverRotated = false;
-        gravityScript.gravityText.SetActive(false);
     }
 }

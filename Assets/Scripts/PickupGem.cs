@@ -7,20 +7,33 @@ public class PickupGem : MonoBehaviour
 {
     public GameObject gemUIPrefab;
     [SerializeField] private GameObject uiParent;
+    public AudioClip pickUpClip;
+    public AudioSource soundPlayer;
 
     public void Update()
     {
         if (uiParent == null)
             uiParent = GameObject.Find("GemHolder");
+        if (soundPlayer == null)
+            soundPlayer = uiParent.GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            AddGemUI();
-            Destroy(this.gameObject);
+            StartCoroutine(PlayClip());
+            Debug.Log(other);
         }
+    }
+
+    IEnumerator PlayClip()
+    {
+        soundPlayer.clip = pickUpClip;
+        soundPlayer.Play();
+        yield return new WaitUntil(() => soundPlayer.time >= pickUpClip.length);
+        AddGemUI();
+        Destroy(this.gameObject);
     }
 
     void AddGemUI()

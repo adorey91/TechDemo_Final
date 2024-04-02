@@ -7,9 +7,8 @@ public class ResetBuildings : LeverController
     public GameManager manager;
     public GravityControl gravityScript;
     public FallControl fallScript;
-
     public bool resetRequested;
-
+    public AudioSource resetAudio;
 
     void Update()
     {
@@ -19,6 +18,7 @@ public class ResetBuildings : LeverController
             ResetOtherLevers();
             gravityScript.ClearLists();
             FindMazeAndRangeInstance();
+            resetAudio.Play();
 
             if (manager.mazeInstance != null)
                 Destroy(manager.mazeInstance);
@@ -54,10 +54,8 @@ public class ResetBuildings : LeverController
         gravityScript.lever.transform.rotation = gravityScript.leverRotation;
         gravityScript.turnOffGravity = false;
         gravityScript.leverRotated = false;
-        gravityScript.gravityText.SetActive(false);
         fallScript.lever.transform.rotation = fallScript.leverRotation;
         fallScript.fallApartNow = false;
         fallScript.leverRotated = false;
-        fallScript.fallText.SetActive(false);
     }
 }

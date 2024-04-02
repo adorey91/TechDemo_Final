@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3618253695315120709}
   - component: {fileID: 5944259681824703171}
   - component: {fileID: 8214529166579308214}
+  - component: {fileID: 1232585016859984656}
   m_Layer: 0
   m_Name: GemPickup
   m_TagString: Untagged
@@ -32,8 +33,7 @@ Transform:
   m_LocalPosition: {x: -7.82, y: 1.059, z: 11.72}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 2997062832524159919}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7664571678193050066
@@ -95,11 +95,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2548069718627791502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eec5c86520fa54342a9e4e7b52b19082, type: 3}
+  m_Script: {fileID: 11500000, guid: 606019b09348f784e89cfed5fa45eaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gemUIPrefab: {fileID: 6793554211803269911, guid: 47559e42707af0041bc2fafa219c3409, type: 3}
+  gemUIPrefab: {fileID: 6793554211803269911, guid: 4f919385cd6f8fd4e9bd51e25f3b7021, type: 3}
   uiParent: {fileID: 0}
+  pickUpClip: {fileID: 8300000, guid: 783f3bfb7d8f9a54fa76f6c0a51a53d8, type: 3}
+  soundPlayer: {fileID: 0}
 --- !u!135 &8214529166579308214
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -121,86 +123,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.264329
   m_Center: {x: 0, y: -0.000000022351742, z: 0}
---- !u!1 &5013146539557447290
-GameObject:
+--- !u!114 &1232585016859984656
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2997062832524159919}
-  - component: {fileID: 672370749608420804}
-  - component: {fileID: 8313728941722745916}
-  m_Layer: 0
-  m_Name: SM_FX_Glow_Ring_01
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2997062832524159919
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5013146539557447290}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.511, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.5, z: 0.25}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 3370623157076160213}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &672370749608420804
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5013146539557447290}
-  m_Mesh: {fileID: 4300000, guid: d29428f9d0c477141a67eda96e5710ea, type: 3}
---- !u!23 &8313728941722745916
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5013146539557447290}
+  m_GameObject: {fileID: 2548069718627791502}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: bf8b699dcdcd73e49a261a38c68b012b, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2587303d45b9aa4a941c51fe39f1e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  X: 0
+  Y: 45
+  Z: 0

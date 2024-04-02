@@ -20,6 +20,5 @@ public class Respawn : MonoBehaviour
         {
             player.transform.position = savePos.playerPosition;
         }
-     
     }
 }

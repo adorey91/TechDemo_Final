@@ -26,6 +26,7 @@ public class Player : Character
     [SerializeField] private float moveSpeedMultipler;
     private bool isRunning;
     [SerializeField] LayerMask ground;
+    float distToGround;
 
     [Header("View Settings")]
     [SerializeField] private float mouseSensitivity;
@@ -33,15 +34,18 @@ public class Player : Character
     [SerializeField] private Camera playerCamera;
     private float verticalRotation;
 
+    [Header("Game Panels")]
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private GameObject controlsPanel;
-    //[SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject gameOverPanel;
+
+    WaypointFollower waypointFollower;
 
     public void Awake()
     {
+        waypointFollower = FindObjectOfType<WaypointFollower>();
         current = this;
         pauseMenu = FindAnyObjectByType<PauseMenu>();
-
     }
 
     private void Start()
@@ -50,24 +54,26 @@ public class Player : Character
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         curHp = maxHp;
-       // healthBarUI.Start();
+        playerCamera.transform.rotation = Quaternion.identity;
+        distToGround = GetComponent<CapsuleCollider>().bounds.extents.y; //finds the distance to ground from the collider
+        healthBarUI.Start();
     }
+
     private void Update()
     {
-       // healthPercentage.text = $"{((float)curHp / (float)maxHp) * 100} %";
+        healthPercentage.text = $"{((float)curHp / (float)maxHp) * 100} %";
     }
 
     private void FixedUpdate()
     {
-        
-        MovePlayer();
         if (playerInput != null)
-            moveSpeed = walkSpeed;
+            MovePlayer();
     }
-
 
     private void MovePlayer()
     {
+        isGrounded();
+
         Vector3 cameraForward = playerCamera.transform.forward;
         cameraForward.y = 0f;
         cameraForward.Normalize();
@@ -82,7 +88,11 @@ public class Player : Character
         else
             moveSpeed = walkSpeed;
 
-        rb.MovePosition(rb.position + movementVector.normalized * moveSpeed * Time.deltaTime);
+
+        if (waypointFollower.movingPlatform)
+            MovePlayerOnPlatform();
+        else
+            rb.MovePosition(rb.position + movementVector.normalized * moveSpeed * Time.fixedDeltaTime);
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -108,7 +118,7 @@ public class Player : Character
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed && isGrounded())
+        if (context.performed && isGrounded() && !waypointFollower.movingPlatform)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
@@ -116,7 +126,7 @@ public class Player : Character
 
     bool isGrounded()
     {
-        return Physics.CheckSphere(transform.position, 0.1f, ground);
+        return Physics.Raycast(transform.position, - Vector3.up, distToGround + 0.1f);
     }
 
     public void Run(InputAction.CallbackContext context)
@@ -129,7 +139,7 @@ public class Player : Character
 
     public void Fire(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && !waypointFollower.movingPlatform)
         {
             if (!alreadyAttacked)
             {
@@ -148,5 +158,22 @@ public class Player : Character
     void ResetAttack()
     {
         alreadyAttacked = false;
+    }
+
+    void MovePlayerOnPlatform()
+    {
+        Vector3 destination = waypointFollower.GetDestination();
+        float movingSpeed = waypointFollower.speed;
+
+        Vector3 direction = (destination - rb.position).normalized;
+
+        Vector3 newPosition = Vector3.MoveTowards(rb.position, direction, Time.deltaTime * movingSpeed);
+        rb.MovePosition(newPosition);
+
+        Vector3 movementVector = new Vector3(playerInput.x, 0f, playerInput.y);
+
+        Vector3 targetVelocity = (movementVector.x * playerCamera.transform.right + movementVector.z * playerCamera.transform.forward).normalized * moveSpeed;
+        targetVelocity.y = rb.velocity.y;
+        rb.velocity = targetVelocity;
     }
 }

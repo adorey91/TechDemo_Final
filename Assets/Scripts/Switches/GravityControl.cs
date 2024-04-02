@@ -6,13 +6,9 @@ public class GravityControl : LeverController
 {
     public List<Rigidbody> MazeList;
     public List<Rigidbody> RangeList;
-
     public bool turnOffGravity;
-
     public FallControl fallScript;
-
-    public GameObject gravityText;
-
+    public AudioSource gravityAudio;
 
     public void Update()
     {
@@ -20,6 +16,7 @@ public class GravityControl : LeverController
         {
             ResetOtherLever();
             MoveLever(45);
+            gravityAudio.Play();
             for (int i = 0; i < RangeList.Count; i++)
             {
                 RangeList[i].useGravity = false;
@@ -31,8 +28,6 @@ public class GravityControl : LeverController
                 MazeList[i].isKinematic = false;
             }
         }
-        if (leverRotated == true)
-            gravityText.SetActive(true);
     }
 
     public void ClearLists()
@@ -52,6 +47,5 @@ public class GravityControl : LeverController
         fallScript.lever.transform.rotation = fallScript.leverRotation;
         fallScript.fallApartNow = false;
         fallScript.leverRotated = false;
-        fallScript.fallText.SetActive(false);
     }
 }
