@@ -23,7 +23,6 @@ public class PickupGem : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             StartCoroutine(PlayClip());
-            Debug.Log(other);
         }
     }
 

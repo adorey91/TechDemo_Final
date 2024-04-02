@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaypointFollower : MonoBehaviour
 {
-    private Vector3 startPos;
+    internal Vector3 startPos;
     private Vector3 endPos;
     private Vector3 destination;
     private int moveCount;
@@ -56,7 +56,7 @@ public class WaypointFollower : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {

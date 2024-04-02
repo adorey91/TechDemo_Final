@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SavePosition : MonoBehaviour
 {
-    public Vector3 playerPosition;
+    internal Vector3 playerPosition;
     public TextMeshProUGUI positionText;
 
     public void Start()

@@ -11,19 +11,16 @@ public class PlayerInteractions : MonoBehaviour
     private bool reset;
     private bool fall;
     private bool gravity;
-    public ResetBuildings resetBuildings;
-    public FallControl fallControl;
-    public GravityControl gravityControl;
+    ResetBuildings resetBuildings;
+    FallControl fallControl;
+    GravityControl gravityControl;
     WaypointFollower waypointFollower;
-
 
     [Header("Switch Settings")]
     [SerializeField] private TextMeshPro UseText;
     [SerializeField] private Transform Camera;
-    [SerializeField] private float MaxUseDistance = 5f;
-    [SerializeField] private LayerMask UseLayers;
     [SerializeField] float DistanceFromCamera;
-    
+
     private bool isGamePaused;
     public PauseMenu pauseMenu;
 
@@ -31,12 +28,25 @@ public class PlayerInteractions : MonoBehaviour
     {
         isGamePaused = false;
         waypointFollower = FindObjectOfType<WaypointFollower>();
+        resetBuildings = FindObjectOfType<ResetBuildings>();
+        fallControl = FindObjectOfType<FallControl>();
+        gravityControl = FindObjectOfType<GravityControl>();
     }
 
-    public void Update()
+    private void Update()
     {
-        CheckLevers();
-        PlatformCheck();
+        if (reset && !resetBuildings.leverRotated)
+            ShowText("Press Enter To \nReset Buildings");
+        else if (fall && !fallControl.leverRotated)
+            ShowText("Press Enter To \nBreak Buildings");
+        else if (gravity && !gravityControl.leverRotated)
+            ShowText("Press Enter \nTo Turn Off Gravity \nto Buildings");
+        else if (waypointFollower.playerOn && !waypointFollower.startPlatform)
+            ShowText("Press Enter to\nMove Platform");
+        else if (waypointFollower.playerOn && waypointFollower.startPlatform)
+            UseText.gameObject.SetActive(false);
+        else
+            UseText.gameObject.SetActive(false);
     }
 
     public void Interact(InputAction.CallbackContext context)
@@ -44,11 +54,11 @@ public class PlayerInteractions : MonoBehaviour
         if (context.performed)
         {
             if (reset)
-                resetBuildings.resetRequested = true;
+                resetBuildings.DestroyBuildings();
             if (fall)
-                fallControl.fallApartNow = true;
+                fallControl.FallApart();
             if (gravity)
-                gravityControl.turnOffGravity = true;
+                gravityControl.TurnOffGravity();
             if (waypointFollower.playerOn)
                 waypointFollower.startPlatform = true;
         }
@@ -68,64 +78,46 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
-    private void PlatformCheck()
+    private void OnTriggerEnter(Collider other)
     {
-        if (waypointFollower.playerOn && !waypointFollower.startPlatform)
+        other.name = other.gameObject.name;
+        if (other.name == "ResetSwitch" && !resetBuildings.leverRotated)
         {
-            UseText.SetText("Press Enter To Activate");
-            UseText.gameObject.SetActive(true);
-
-            // Set the position of UseText to be in front of the camera & rotation to camera
-            Vector3 positionOffset = Camera.forward * DistanceFromCamera;
-            UseText.transform.position = Camera.position + positionOffset;
-            UseText.transform.rotation = Quaternion.LookRotation(Camera.forward);
+            reset = true;
+            gravity = false;
+            fall = false;
+        }
+        else if (other.name == "FallApart" && !fallControl.leverRotated)
+        {
+            fall = true;
+            reset = false;
+            gravity = false;
+        }
+        else if (other.name == "TurnOffGravity" && !gravityControl.leverRotated)
+        {
+            gravity = true;
+            reset = false;
+            fall = false;
         }
     }
 
-    private void CheckLevers()
+    private void OnTriggerExit(Collider other)
     {
-        if (Physics.Raycast(Camera.position, Camera.forward, out RaycastHit hit, MaxUseDistance, UseLayers))
-        {
-            if (hit.collider.TryGetComponent<LeverController>(out LeverController lever))
-            {
-                if (!lever.IsLeverRotated())
-                {
-                    UseText.SetText("");
-                    UseText.gameObject.SetActive(true);
-                    Vector3 midpoint = (hit.point + Camera.position) * 0.5f;
-                    UseText.transform.position = midpoint;
-                    UseText.transform.rotation = Quaternion.LookRotation((hit.point - Camera.position).normalized);
+        reset = false;
+        gravity = false;
+        fall = false;
 
-                    string leverAsString = lever.ToString();
-                    if (leverAsString == "TurnOffGravity (GravityControl)")
-                    {
-                        UseText.SetText("Press Enter \nTo Turn Off Gravity \nto Buildings");
-                        gravity = true;
-                        reset = false;
-                        fall = false;
-                    }
-                    if (leverAsString == "ResetSwitch (ResetBuildings)")
-                    {
-                        UseText.SetText("Press Enter To \nReset Buildings");
-                        reset = true;
-                        gravity = false;
-                        fall = false;
-                    }
-                    if (leverAsString == "FallApart (FallControl)")
-                    {
-                        UseText.SetText("Press Enter To Watch\n Buildings Fall Apart");
-                        fall = true;
-                        reset = false;
-                        gravity = false;
-                    }
-                }
-            }
-        }
-        else
-        {
-            UseText.gameObject.SetActive(false);
-            resetBuildings.lever.transform.rotation = resetBuildings.leverRotation;
-            resetBuildings.leverRotated = false;
-        }
+        UseText.gameObject.SetActive(false);
+        resetBuildings.lever.transform.rotation = resetBuildings.leverRotation;
+        resetBuildings.leverRotated = false;
+    }
+
+    // shows textbox infront of player when inside trigger
+    private void ShowText(string sentence)
+    {
+        UseText.SetText(sentence);
+        UseText.gameObject.SetActive(true);
+        Vector3 positionOffset = Camera.forward * DistanceFromCamera;
+        UseText.transform.SetPositionAndRotation(Camera.position + positionOffset, Quaternion.LookRotation(Camera.forward));
     }
 }

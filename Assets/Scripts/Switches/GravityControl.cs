@@ -4,48 +4,29 @@ using UnityEngine;
 
 public class GravityControl : LeverController
 {
-    public List<Rigidbody> MazeList;
-    public List<Rigidbody> RangeList;
-    public bool turnOffGravity;
-    public FallControl fallScript;
+    [Header("Audio")]
     public AudioSource gravityAudio;
 
-    public void Update()
+    public void TurnOffGravity()
     {
-        if (turnOffGravity && !leverRotated)
+        if (!leverRotated)
         {
             ResetOtherLever();
-            MoveLever(45);
+            MoveLever(leverRotationAngle);
             gravityAudio.Play();
-            for (int i = 0; i < RangeList.Count; i++)
+            leverRotated = true;
+
+            for(int i = 0; i <manager.MazeRangeList.Count; i++)
             {
-                RangeList[i].useGravity = false;
-                RangeList[i].isKinematic = false;
-            }
-            for (int i = 0; i < MazeList.Count; i++)
-            {
-                MazeList[i].useGravity = false;
-                MazeList[i].isKinematic = false;
+                manager.MazeRangeList[i].useGravity = false;
+                manager.MazeRangeList[i].isKinematic = false;
             }
         }
-    }
-
-    public void ClearLists()
-    {
-        MazeList.Clear();
-        RangeList.Clear();
-    }
-
-    public void AddRigidbodiesFromChildren(GameObject obj, List<Rigidbody> rigidbodyList)
-    {
-        Rigidbody[] rigidbodies = obj.GetComponentsInChildren<Rigidbody>();
-        rigidbodyList.AddRange(rigidbodies);
     }
 
     void ResetOtherLever()
     {
         fallScript.lever.transform.rotation = fallScript.leverRotation;
-        fallScript.fallApartNow = false;
         fallScript.leverRotated = false;
     }
 }

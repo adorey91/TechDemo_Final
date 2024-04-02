@@ -139,7 +139,7 @@ public class Player : Character
 
     public void Fire(InputAction.CallbackContext context)
     {
-        if (context.performed && !waypointFollower.movingPlatform)
+        if (context.performed && !waypointFollower.movingPlatform && !pauseMenu.paused)
         {
             if (!alreadyAttacked)
             {

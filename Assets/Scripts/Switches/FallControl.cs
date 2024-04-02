@@ -4,28 +4,21 @@ using UnityEngine;
 
 public class FallControl : LeverController
 {
-    public GravityControl gravityScript;
-    public bool fallApartNow;
-    public GameObject fallLever;
     public AudioSource fallAudio;
 
-    public void Update()
+    public void FallApart()
     {
-        if (fallApartNow && !leverRotated)
+        if (!leverRotated)
         {
             ResetOtherLever();
-            MoveLever(50);
+            MoveLever(leverRotationAngle);
+            leverRotated = true;
             fallAudio.Play();
 
-            for (int i = 0; i < gravityScript.RangeList.Count; i++)
+            for (int i = 0; i < manager.MazeRangeList.Count; i++)
             {
-                gravityScript.RangeList[i].isKinematic = false;
-                gravityScript.RangeList[i].useGravity = true;
-            }
-            for (int i = 0; i < gravityScript.MazeList.Count; i++)
-            {
-                gravityScript.MazeList[i].isKinematic = false;
-                gravityScript.MazeList[i].useGravity = true;
+                manager.MazeRangeList[i].useGravity = true;
+                manager.MazeRangeList[i].isKinematic = false;
             }
         }
     }
@@ -33,7 +26,6 @@ public class FallControl : LeverController
     void ResetOtherLever()
     {
         gravityScript.lever.transform.rotation = gravityScript.leverRotation;
-        gravityScript.turnOffGravity = false;
         gravityScript.leverRotated = false;
     }
 }
