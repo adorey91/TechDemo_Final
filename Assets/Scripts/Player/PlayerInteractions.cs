@@ -20,6 +20,7 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private TextMeshPro UseText;
     [SerializeField] private Transform Camera;
     [SerializeField] float DistanceFromCamera;
+    public LayerMask layerMask;
 
     private bool isGamePaused;
     public PauseMenu pauseMenu;

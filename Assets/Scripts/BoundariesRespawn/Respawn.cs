@@ -6,7 +6,7 @@ public class Respawn : MonoBehaviour
 {
     public GameObject player;
     private SavePosition savePos;
-    AudioSource respawnAudioSource;
+    [SerializeField] AudioSource respawnAudioSource;
 
     public void Start()
     {
@@ -14,7 +14,6 @@ public class Respawn : MonoBehaviour
         savePos = player.GetComponent<SavePosition>();
         respawnAudioSource = GetComponent<AudioSource>();
     }
-
 
     public void OnTriggerEnter(Collider other)
     {
