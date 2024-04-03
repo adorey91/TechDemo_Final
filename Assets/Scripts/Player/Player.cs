@@ -72,7 +72,7 @@ public class Player : Character
 
     private void MovePlayer()
     {
-        isGrounded();
+        IsGrounded();
 
         Vector3 cameraForward = playerCamera.transform.forward;
         cameraForward.y = 0f;
@@ -118,13 +118,13 @@ public class Player : Character
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed && isGrounded() && !waypointFollower.movingPlatform)
+        if (context.performed && IsGrounded() && !waypointFollower.movingPlatform)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
 
-    bool isGrounded()
+    bool IsGrounded()
     {
         return Physics.Raycast(transform.position, - Vector3.up, distToGround + 0.1f);
     }
@@ -170,7 +170,7 @@ public class Player : Character
         Vector3 newPosition = Vector3.MoveTowards(rb.position, direction, Time.deltaTime * movingSpeed);
         rb.MovePosition(newPosition);
 
-        Vector3 movementVector = new Vector3(playerInput.x, 0f, playerInput.y);
+        Vector3 movementVector = new (playerInput.x, 0f, playerInput.y);
 
         Vector3 targetVelocity = (movementVector.x * playerCamera.transform.right + movementVector.z * playerCamera.transform.forward).normalized * moveSpeed;
         targetVelocity.y = rb.velocity.y;

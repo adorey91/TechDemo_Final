@@ -19,6 +19,9 @@ public class Door : MonoBehaviour
     private Vector3 StartPosition;
     private Vector3 Forward;
 
+    public AudioSource doorAudio;
+    public AudioClip doorSound;
+
     private Coroutine AnimationCoroutine;
 
     private void Awake()
@@ -56,8 +59,8 @@ public class Door : MonoBehaviour
             endRotation = Quaternion.Euler(new Vector3(0, StartRotation.y - RotationAmount, 0));
 
         IsOpen = true;
-
         float time = 0;
+        PlayAudio();
         while (time < 1)
         {
             transform.rotation = Quaternion.Slerp(startRotation, endRotation, time);
@@ -71,8 +74,9 @@ public class Door : MonoBehaviour
         Vector3 endPosition = StartPosition + SlideAmount * SlideDirection;
         Vector3 startPosition = transform.position;
 
-        float time = 0;
         IsOpen = true;
+        float time = 0;
+        PlayAudio();
         while (time < 1)
         {
             transform.position = Vector3.Lerp(startPosition, endPosition, time);
@@ -88,6 +92,7 @@ public class Door : MonoBehaviour
             if (AnimationCoroutine != null)
                 StopCoroutine(AnimationCoroutine);
 
+            PlayAudio();
             if (IsRotatingDoor)
                 AnimationCoroutine = StartCoroutine(DoRotationClose());
             else
@@ -125,5 +130,11 @@ public class Door : MonoBehaviour
             yield return null;
             time += Time.deltaTime * Speed;
         }
+    }
+
+    void PlayAudio()
+    {
+        doorAudio.clip = doorSound;
+        doorAudio.Play();
     }
 }

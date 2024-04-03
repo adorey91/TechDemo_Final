@@ -30,7 +30,7 @@ public class PickupGem : MonoBehaviour
     {
         soundPlayer.clip = pickUpClip;
         soundPlayer.Play();
-        yield return new WaitUntil(() => soundPlayer.time >= pickUpClip.length);
+        yield return new WaitForSeconds(0.5f);
         AddGemUI();
         Destroy(this.gameObject);
     }

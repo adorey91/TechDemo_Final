@@ -6,6 +6,8 @@ public class ArenaTrigger : MonoBehaviour
 {
     [SerializeField] GameObject playerHealth;
     [SerializeField] bool showHealth;
+    [SerializeField] GameObject arenaCamera;
+    [SerializeField] GameObject arenaScreen;
 
     void Start()
     {
@@ -13,11 +15,7 @@ public class ArenaTrigger : MonoBehaviour
         showHealth = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    
 
     public void OnTriggerEnter(Collider other)
     {
@@ -27,12 +25,21 @@ public class ArenaTrigger : MonoBehaviour
             {
                 playerHealth.SetActive(false);
                 showHealth = false;
+                arenaCamera.SetActive(false);
+                arenaScreen.SetActive(false);
             }
             else if (showHealth == false)
             {
                 playerHealth.SetActive(true);
                 showHealth = true;
+                arenaCamera.SetActive(true);
+                arenaScreen.SetActive(true);
             }
         }
+    }
+
+    void MovePlayerCamera()
+    {
+
     }
 }

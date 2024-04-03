@@ -69,12 +69,12 @@ public class PlayerInteractions : MonoBehaviour
     {
         if (context.performed && isGamePaused == false)
         {
-            pauseMenu.pauseGame();
+            pauseMenu.PauseGame();
             isGamePaused = true;
         }
         else if (context.performed && isGamePaused == true)
         {
-            pauseMenu.resumeGame();
+            pauseMenu.ResumeGame();
             isGamePaused = false;
         }
     }

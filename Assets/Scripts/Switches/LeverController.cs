@@ -15,9 +15,7 @@ public class LeverController : MonoBehaviour
 
     [Header("Audio Settings")]
     public AudioClip buildingSound;
-    public AudioClip switchSound;
     public AudioSource buildingAudioSource;
-    public AudioSource switchAudioSource;
 
 
     [Header("Scripts Referenced")]
@@ -44,12 +42,6 @@ public class LeverController : MonoBehaviour
     {
         buildingAudioSource.clip = buildingSound;
         buildingAudioSource.Play();
-    }
-
-    public void PlaySwitchAudio()
-    {
-        switchAudioSource.clip = switchSound;
-        switchAudioSource.Play();
     }
 
     IEnumerator RotateLever(float targetAngle)

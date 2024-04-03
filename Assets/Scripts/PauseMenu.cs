@@ -13,7 +13,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject controlsPanel;
     public bool paused;
 
-    public void pauseGame()
+    public void PauseGame()
     {
         paused = true;
         pausePanel.SetActive(true);
@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public void resumeGame()
+    public void ResumeGame()
     {
         paused = false; 
         pausePanel.SetActive(false);
@@ -35,13 +35,13 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    public void resetGame()
+    public void ResetGame()
     {
-        resumeGame();
+        ResumeGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void quitGame()
+    public void QuitGame()
     {
         Application.Quit();
     }

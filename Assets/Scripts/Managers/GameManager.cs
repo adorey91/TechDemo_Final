@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject MazeRangePrefab;
     public GameObject MazeRangeInstance;
-    Vector3 MazeRangePosition = new Vector3(29, 6, -35);
+    Vector3 MazeRangePosition = new (29, 6, -35);
 
     public GameObject gemPrefab;
     private GameObject gemInstanceClone;

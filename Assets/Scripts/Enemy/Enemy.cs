@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using Unity.VisualScripting;
 
 public enum State
 {
@@ -23,9 +24,7 @@ public class Enemy : Character
     [SerializeField] float runSpeed;
     [SerializeField] int healthPanic;
     [SerializeField] float enemyDistanceRun;
-    MeshRenderer meshRenderer;
     NavMeshAgent agent;
-
 
     [Header("Target Settings")]
     Vector3 targetPosition;
@@ -36,9 +35,10 @@ public class Enemy : Character
     public State currentState;
 
     [Header("Patroling")]
-    [SerializeField] Transform[] wayPointPos;
-    Vector3 lastPosition;
+   // [SerializeField] Vector3[] wayPointPos = new Vector3[4];
+    [SerializeField] Transform[] wayPointPos = new Transform[4];
     [SerializeField] int wayPointInc;
+    Vector3 lastPosition;
     float distanceThreshold = 0.1f;
 
     [Header("Chasing")]
@@ -66,7 +66,6 @@ public class Enemy : Character
         controller = GetComponent<Controller>();
         target = Player.current;
         agent = GetComponent<NavMeshAgent>();
-        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     public void Update()
@@ -184,6 +183,7 @@ public class Enemy : Character
     {
         AgentSetup(0, Color.red, "Attacking");
         controller.StopMovement();
+        controller.LookTowards(targetPosition);
 
         if (!alreadyAttacked)
         {
@@ -222,7 +222,7 @@ public class Enemy : Character
     public void AgentSetup(float moveSpeed, Color color, string enemyState)
     {
         agent.speed = moveSpeed;
-        meshRenderer.material.color = color;
+        mesh.material.color = color;
     }
 
     void ResetAttack()

@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
     [Header("Stats")]
     public int curHp;
     public int maxHp;
+    public MeshRenderer mesh;
 
     protected Character target;
 

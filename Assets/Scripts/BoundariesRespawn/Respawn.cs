@@ -8,11 +8,13 @@ public class Respawn : MonoBehaviour
     private SavePosition savePos;
     [SerializeField] AudioSource respawnAudioSource;
 
+
+
     public void Start()
     {
         player = GameObject.Find("Player");
         savePos = player.GetComponent<SavePosition>();
-        respawnAudioSource = GetComponent<AudioSource>();
+        respawnAudioSource.playOnAwake = false;
     }
 
     public void OnTriggerEnter(Collider other)
@@ -26,7 +28,8 @@ public class Respawn : MonoBehaviour
     IEnumerator PlayAudioThenRespawn()
     {
         respawnAudioSource.Play ();
-        yield return new WaitUntil(() => respawnAudioSource.time >= respawnAudioSource.clip.length);
+        yield return new WaitForSeconds(0.05f);
+        //yield return new WaitUntil(() => respawnAudioSource.time >= respawnAudioSource.clip.length);
         player.transform.position = savePos.playerPosition;
     }
 }
