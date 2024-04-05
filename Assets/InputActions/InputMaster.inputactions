@@ -51,15 +51,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Crouch",
-                    "type": "Button",
-                    "id": "4dc38517-5fc9-4bf5-a741-54e2c0b0197c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Interact",
                     "type": "Button",
                     "id": "3acd168d-6f83-4781-a21e-16ae512ade06",
@@ -71,7 +62,7 @@
                 {
                     "name": "Pause",
                     "type": "Button",
-                    "id": "14a18009-038d-4fb7-ae70-786a350caf8f",
+                    "id": "7de446a4-5c54-4f2d-99fa-b84ab2473a41",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -305,7 +296,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -316,19 +307,8 @@
                     "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b3e5a8ad-a182-41f5-adfd-75e3849ccf9d",
-                    "path": "<Keyboard>/c",
-                    "interactions": "",
-                    "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Crouch",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -338,14 +318,14 @@
                     "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "1cf7dc90-30a0-40ff-980d-cea29e739927",
+                    "id": "cb1db904-aff2-4233-95c2-6be6939fcf9f",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",

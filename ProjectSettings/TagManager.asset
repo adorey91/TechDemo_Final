@@ -11,6 +11,7 @@ TagManager:
   - Boundary
   - Maze
   - Patrol
+  - Healing
   layers:
   - Default
   - TransparentFX

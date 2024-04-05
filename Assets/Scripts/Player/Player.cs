@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -6,68 +7,60 @@ using UnityEngine.InputSystem;
 
 public class Player : Character
 {
+    #region Declarations
+
+    GameManager gameManager;
     public static Player current;
-    [SerializeField] HealthBarUI healthBarUI;
-    [SerializeField] PauseMenu pauseMenu;
     private Vector2 playerInput;
     private Rigidbody rb;
+    [SerializeField] Platform platform;
 
-    [SerializeField] private TMP_Text healthPercentage;
-
-    [Header("Attack")]
-    [SerializeField] private GameObject attackPrefab;
-    [SerializeField] float timeBetweenAttacks;
-    bool alreadyAttacked;
 
     [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float moveSpeedMultipler;
-    private bool isRunning;
+    [SerializeField] float walkSpeed;
+    [SerializeField] float moveSpeedMulitplier;
+    [SerializeField] float jumpForce;
     [SerializeField] LayerMask ground;
     float distToGround;
+    float moveSpeed;
+    bool isRunning;
 
     [Header("View Settings")]
-    [SerializeField] private float mouseSensitivity;
-    [SerializeField] private float upDownLimit;
-    [SerializeField] private Camera playerCamera;
-    private float verticalRotation;
+    [SerializeField] float mouseSensitivity;
+    [SerializeField] float upDownLimit;
+    [SerializeField] Camera playerCamera;
+    float verticalRotation;
 
-    [Header("Game Panels")]
-    [SerializeField] private GameObject pausePanel;
-    [SerializeField] private GameObject controlsPanel;
-    [SerializeField] private GameObject gameOverPanel;
+    [Header("Interactions")]
+    public LayerMask layerMask;
+    [SerializeField] TMP_Text InteractText;
+    bool reset;
+    bool fall;
+    bool gravity;
+    private SwitchController interactingWith;
 
-    WaypointFollower waypointFollower;
+    public bool escapeInteracted;
+    #endregion
 
     public void Awake()
     {
-        waypointFollower = FindObjectOfType<WaypointFollower>();
         current = this;
-        pauseMenu = FindAnyObjectByType<PauseMenu>();
     }
 
-    private void Start()
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        gameManager = FindAnyObjectByType<GameManager>();
         curHp = maxHp;
         playerCamera.transform.rotation = Quaternion.identity;
-        distToGround = GetComponent<CapsuleCollider>().bounds.extents.y; //finds the distance to ground from the collider
-        healthBarUI.Start();
+        distToGround = GetComponent<CapsuleCollider>().bounds.extents.y; // finds distance to the ground from collider
     }
 
-    private void Update()
+    void FixedUpdate()
     {
-        healthPercentage.text = $"{((float)curHp / (float)maxHp) * 100} %";
-    }
-
-    private void FixedUpdate()
-    {
-        if (playerInput != null)
+        if (playerInput != null && !gameManager.IsGamePaused())
             MovePlayer();
+
     }
 
     private void MovePlayer()
@@ -75,34 +68,28 @@ public class Player : Character
         IsGrounded();
 
         Vector3 cameraForward = playerCamera.transform.forward;
-        cameraForward.y = 0f;
+        cameraForward.y = 0;
         cameraForward.Normalize();
-
         Vector3 cameraRight = playerCamera.transform.right;
 
         Vector3 movementVector = (playerInput.y * cameraForward) + (playerInput.x * cameraRight);
         movementVector.Normalize();
 
         if (isRunning)
-            moveSpeed = walkSpeed * moveSpeedMultipler;
+            moveSpeed = walkSpeed * moveSpeedMulitplier;
         else
             moveSpeed = walkSpeed;
 
-
-        if (waypointFollower.movingPlatform)
+        if (platform.IsMoving())
             MovePlayerOnPlatform();
         else
             rb.MovePosition(rb.position + movementVector.normalized * moveSpeed * Time.fixedDeltaTime);
     }
 
-    public void Move(InputAction.CallbackContext context)
-    {
-        playerInput = context.ReadValue<Vector2>();
-    }
 
     public void Look(InputAction.CallbackContext context)
     {
-        if (context.performed && !pauseMenu.paused)
+        if (context.performed && !gameManager.IsGamePaused())
         {
             Vector2 mouseDelta = context.ReadValue<Vector2>();
 
@@ -116,64 +103,108 @@ public class Player : Character
         }
     }
 
+    #region Move/Jump/Run/Grounded
+
+    public void Move(InputAction.CallbackContext context)
+    {
+        playerInput = context.ReadValue<Vector2>();
+    }
+
     public void Jump(InputAction.CallbackContext context)
     {
-        if (context.performed && IsGrounded() && !waypointFollower.movingPlatform)
+        if (context.performed && IsGrounded() && !gameManager.IsGamePaused())
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         }
     }
 
-    bool IsGrounded()
-    {
-        return Physics.Raycast(transform.position, - Vector3.up, distToGround + 0.1f);
-    }
-
     public void Run(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.performed && !gameManager.IsGamePaused())
             isRunning = true;
         if (context.canceled)
             isRunning = false;
     }
 
-    public void Fire(InputAction.CallbackContext context)
+    private void MovePlayerOnPlatform()
     {
-        if (context.performed && !waypointFollower.movingPlatform && !pauseMenu.paused)
-        {
-            if (!alreadyAttacked)
-            {
-                Vector3 fireDirection = playerCamera.transform.forward;
-                Vector3 spawnPosition = transform.position + fireDirection * 1f;
-
-                GameObject proj = Instantiate(attackPrefab, spawnPosition, Quaternion.identity);
-                proj.transform.rotation = Quaternion.LookRotation(fireDirection);
-                proj.GetComponent<Projectile>().Setup(this);
-                alreadyAttacked = true;
-                Invoke(nameof(ResetAttack), timeBetweenAttacks);
-            }
-        }
-    }
-
-    void ResetAttack()
-    {
-        alreadyAttacked = false;
-    }
-
-    void MovePlayerOnPlatform()
-    {
-        Vector3 destination = waypointFollower.GetDestination();
-        float movingSpeed = waypointFollower.speed;
+        Vector3 destination = platform.GetDestination();
+        float movingSpeed = platform.speed;
 
         Vector3 direction = (destination - rb.position).normalized;
 
-        Vector3 newPosition = Vector3.MoveTowards(rb.position, direction, Time.deltaTime * movingSpeed);
-        rb.MovePosition(newPosition);
-
-        Vector3 movementVector = new (playerInput.x, 0f, playerInput.y);
+        Vector3 movementVector = new(playerInput.x, 0f, playerInput.y);
 
         Vector3 targetVelocity = (movementVector.x * playerCamera.transform.right + movementVector.z * playerCamera.transform.forward).normalized * moveSpeed;
         targetVelocity.y = rb.velocity.y;
         rb.velocity = targetVelocity;
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+    }
+    #endregion
+
+    #region Interactions
+    public void Fire(InputAction.CallbackContext context)
+    {
+        if (context.performed && !gameManager.IsGamePaused())
+        {
+            if (!alreadyAttacked)
+            {
+                //Vector3 fireDirection = playerCamera.transform.forward;
+                //Vector3 spawnPosition = transform.position + fireDirection * 1f;
+
+                //GameObject proj = Instantiate(attackPrefab, spawnPosition, Quaternion.identity);
+                //proj.transform.rotation = Quaternion.LookRotation(fireDirection);
+                //proj.GetComponent<Projectile>().Setup(this);
+                //alreadyAttacked = true;
+                //Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            }
+        }
+    }
+
+    public void Interact(InputAction.CallbackContext context)
+    {
+        if (context.performed && !gameManager.IsGamePaused())
+        {
+            if (interactingWith != null && !interactingWith.leverRotated)
+                interactingWith.ActivateLever(interactingWith.type);
+
+            if (platform.IsPlayerOn())
+                platform.startPlatform = true;
+        }
+    }
+
+    public void Pause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            gameManager.EscapeState();
+    }
+
+    #endregion
+
+    private void OnTriggerEnter(Collider other)
+    {
+        other.name = other.gameObject.name;
+        interactingWith = other.GetComponent<SwitchController>();
+
+        if (other.name == "ResetSwitch")
+            reset = true;
+        else if (other.name == "FallApart")
+            fall = true;
+        else if (other.name == "TurnOffGravity")
+            gravity = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        reset = false;
+        gravity = false;
+        fall = false;
+
+        interactingWith = null;
+        InteractText.gameObject.SetActive(false);
     }
 }

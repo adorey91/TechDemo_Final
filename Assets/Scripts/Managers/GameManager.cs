@@ -1,78 +1,134 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject levelBoundaries;
-
-    public GameObject MazeRangePrefab;
-    public GameObject MazeRangeInstance;
-    Vector3 MazeRangePosition = new (29, 6, -35);
-
-    public GameObject gemPrefab;
-    private GameObject gemInstanceClone;
-    public List<Vector3> gemPos = new()
+    public enum GameState
     {
-            new Vector3(6.55f, 1f, 3.33f),
-            new Vector3(17.15f, 2.5f, 15.13f),
-            new Vector3(20.14f, 4f, 19.31f),
-            new Vector3(20.14f, 8.4f, 19.31f),
-            new Vector3(4.62f, 8.4f, 13.41f),
-            new Vector3(-23.14f, 8.4f, 13.41f),
-            new Vector3(-66.34f, 8.4f, 13.41f),
-    };
+        Gameplay,
+        Gameplay_Arena,
+        Pause,
+        Controls,
+        Gameover,
+    }
+    public GameState state;
+    GameState currentState;
+    GameState stateBeforePause;
 
-    private int countIndex = 0;
-    private int gemHolderCount;
+    bool isGamePaused = false;
 
-    internal List<Rigidbody> MazeRangeList = new();
+    public Player player;
+
+    [Header("Other Managers")]
+    [SerializeField] BuildingManager buildingManager;
+    [SerializeField] CollectableManager collectableManager;
+    [SerializeField] UIManager uiManager;
+    [SerializeField] SoundManager soundManager;
+
+    [Header("Boundaries")]
+    public GameObject levelBoundaries;
 
     public void Start()
     {
-        GameObject.Instantiate(levelBoundaries);
-        BuildBuildings();
-        gemHolderCount = 0;
+        //GameObject.Instantiate(levelBoundaries);
+        state = GameState.Gameplay;
     }
 
     public void Update()
     {
-        CreateGem();
+        if (state != currentState)
+            StateSwitch();
     }
 
-    void CreateGem() // creates a new instance if one doesn't exist upto the amount of positions are placed
+    public void StateSwitch()
     {
-        gemInstanceClone = GameObject.Find("GemPickup(Clone)");
-
-        if (gemInstanceClone == null && gemHolderCount < gemPos.Count)
+        switch (state)
         {
-            InstantiateGem();
-            gemHolderCount++;
+            case GameState.Gameplay: Gameplay(); break;
+            case GameState.Gameplay_Arena: Arena(); break;
+            case GameState.Pause: Pause(); break;
+            case GameState.Controls: Controls(); break;
+            case GameState.Gameover: Gameover(); break;
         }
+
+        currentState = state;
     }
 
-    void InstantiateGem()
+    public void EscapeState()
     {
-        gemInstanceClone = Instantiate(gemPrefab, gemPos[countIndex], Quaternion.identity);
-        countIndex++;
+        player.escapeInteracted = false;
+
+        if (state == GameState.Gameplay || state == GameState.Gameplay_Arena)
+        {
+            stateBeforePause = currentState;
+            LoadState("Pause");
+        }
+        else if (state == GameState.Controls)
+            LoadState("Pause");
+        else if(state == GameState.Pause)
+            LoadState(stateBeforePause.ToString());
     }
 
-    public void BuildBuildings() // creates a new building
+    void Gameplay()
     {
-        MazeRangeInstance = Instantiate(MazeRangePrefab, MazeRangePosition, transform.rotation);
-        AddRigidbodiesFromChildren(MazeRangeInstance, MazeRangeList);
+        uiManager.UI_Gameplay();
+        isGamePaused = false;
     }
 
-    internal void AddRigidbodiesFromChildren(GameObject obj, List<Rigidbody> rigidbodyList)
+    void Arena()
     {
-        Rigidbody[] rigidbodies = obj.GetComponentsInChildren<Rigidbody>();
-        rigidbodyList.AddRange(rigidbodies);
+        uiManager.UI_Arena();
+        isGamePaused = false;
     }
 
-    internal void ClearLists()
+    void Pause()
     {
-        MazeRangeList.Clear();
+        uiManager.UI_Pause();
+        isGamePaused = true;
     }
+
+    void Controls()
+    {
+        uiManager.UI_Controls();
+        isGamePaused = true;
+    }
+
+    void Gameover()
+    {
+        uiManager.UI_Gameover();
+        isGamePaused = true;
+    }
+
+    public void ResetGame()
+    {
+        LoadState("Gameplay");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void EndGame()
+    {
+        Application.Quit();
+        Debug.Log("Quitting Game");
+    }
+
+    public void LoadState(string gameState)
+    {
+        if (gameState == "Controls")
+            state = GameState.Controls;
+        else if (gameState == "Pause")
+            state = GameState.Pause;
+        else if (gameState == "Gameplay")
+            state = GameState.Gameplay;
+        else if (gameState == "Arena")
+            state = GameState.Gameplay_Arena;
+        else if (gameState == "GameOver")
+            state = GameState.Gameover;
+        else
+            Debug.Log("State doesnt exist");
+    }
+
+    public bool IsGamePaused() {  return isGamePaused; }
+
 }
