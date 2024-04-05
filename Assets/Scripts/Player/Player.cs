@@ -33,7 +33,7 @@ public class Player : Character
 
     [Header("Interactions")]
     public LayerMask layerMask;
-    [SerializeField] TMP_Text InteractText;
+    public TMP_Text InteractText;
     bool reset;
     bool fall;
     bool gravity;
@@ -56,11 +56,18 @@ public class Player : Character
         distToGround = GetComponent<CapsuleCollider>().bounds.extents.y; // finds distance to the ground from collider
     }
 
+    private void Update()
+    {
+        if (curHp <= 0)
+            gameManager.LoadState("Gameover");
+
+        healthPercentage.text = $"{((float)curHp / (float)maxHp) * 100} %";
+    }
+
     void FixedUpdate()
     {
         if (playerInput != null && !gameManager.IsGamePaused())
             MovePlayer();
-
     }
 
     private void MovePlayer()
@@ -153,14 +160,14 @@ public class Player : Character
         {
             if (!alreadyAttacked)
             {
-                //Vector3 fireDirection = playerCamera.transform.forward;
-                //Vector3 spawnPosition = transform.position + fireDirection * 1f;
+                Vector3 fireDirection = playerCamera.transform.forward;
+                Vector3 spawnPosition = transform.position + fireDirection * 1f;
 
-                //GameObject proj = Instantiate(attackPrefab, spawnPosition, Quaternion.identity);
-                //proj.transform.rotation = Quaternion.LookRotation(fireDirection);
-                //proj.GetComponent<Projectile>().Setup(this);
-                //alreadyAttacked = true;
-                //Invoke(nameof(ResetAttack), timeBetweenAttacks);
+                GameObject proj = Instantiate(attackPrefab, spawnPosition, Quaternion.identity, transform);
+                proj.transform.rotation = Quaternion.LookRotation(fireDirection);
+                proj.GetComponent<Projectile>().Setup(this);
+                alreadyAttacked = true;
+                Invoke(nameof(ResetAttack), timeBetweenAttacks);
             }
         }
     }
@@ -171,7 +178,6 @@ public class Player : Character
         {
             if (interactingWith != null && !interactingWith.leverRotated)
                 interactingWith.ActivateLever(interactingWith.type);
-
             if (platform.IsPlayerOn())
                 platform.startPlatform = true;
         }
@@ -190,12 +196,33 @@ public class Player : Character
         other.name = other.gameObject.name;
         interactingWith = other.GetComponent<SwitchController>();
 
-        if (other.name == "ResetSwitch")
-            reset = true;
-        else if (other.name == "FallApart")
-            fall = true;
-        else if (other.name == "TurnOffGravity")
-            gravity = true;
+        switch(other.name)
+        {
+            case "ResetSwitch":
+                reset = true;
+                if(interactingWith.leverRotated == false)
+                {
+                    InteractText.gameObject.SetActive(true);
+                    InteractText.SetText(interactingWith.interactionText);
+                }
+                break;
+            case "FallApart":
+                fall = true;
+                if (interactingWith.leverRotated == false)
+                {
+                    InteractText.gameObject.SetActive(true);
+                    InteractText.SetText(interactingWith.interactionText);
+                }
+                break;
+            case "TurnOffGravity":
+                gravity = true;
+                if (interactingWith.leverRotated == false)
+                {
+                    InteractText.gameObject.SetActive(true);
+                    InteractText.SetText(interactingWith.interactionText);
+                }
+                break;
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -206,5 +233,10 @@ public class Player : Character
 
         interactingWith = null;
         InteractText.gameObject.SetActive(false);
+    }
+
+    void ResetAttack()
+    {
+        alreadyAttacked = false;
     }
 }

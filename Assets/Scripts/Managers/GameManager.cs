@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
         Gameover,
     }
     public GameState state;
-    GameState currentState;
+    internal GameState currentState;
     GameState stateBeforePause;
 
     bool isGamePaused = false;
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
     public void Start()
     {
-        //GameObject.Instantiate(levelBoundaries);
+        GameObject.Instantiate(levelBoundaries);
         state = GameState.Gameplay;
     }
 
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
             state = GameState.Gameplay;
         else if (gameState == "Arena")
             state = GameState.Gameplay_Arena;
-        else if (gameState == "GameOver")
+        else if (gameState == "Gameover")
             state = GameState.Gameover;
         else
             Debug.Log("State doesnt exist");

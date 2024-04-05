@@ -14,6 +14,7 @@ public class SwitchController : MonoBehaviour
     public SwitchType type;
 
     [Header("Switch Settings")]
+    public string interactionText;
     public GameObject lever;
     [SerializeField] float leverRotationAngle = 50;
     [SerializeField] float rotationDuration = 0.3f;
@@ -21,6 +22,7 @@ public class SwitchController : MonoBehaviour
     internal Quaternion leverRotation;
     internal bool leverRotated;
     bool rotating;
+
 
     SwitchController[] allSwitches;
     BuildingManager buildingManager;

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8634546562277428137}
   - component: {fileID: 7599683907654736801}
   - component: {fileID: 2167038473867693802}
-  - component: {fileID: 7232242800133375995}
   - component: {fileID: 4591892461506985630}
-  - component: {fileID: 8220229063559815969}
+  - component: {fileID: 8420335782044647855}
+  - component: {fileID: 6768321687885564498}
   m_Layer: 0
   m_Name: HealingHeart
   m_TagString: Healing
@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5894985017901548066}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.340004, y: 1.5099998, z: -14.089999}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
@@ -86,21 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7232242800133375995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5894985017901548066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2587303d45b9aa4a941c51fe39f1e1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  X: 0
-  Y: 15
-  Z: 0
 --- !u!135 &4591892461506985630
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -122,7 +107,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.6
   m_Center: {x: 0, y: -0.000000014901161, z: 0}
---- !u!114 &8220229063559815969
+--- !u!114 &8420335782044647855
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,7 +116,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 5894985017901548066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bc0e421bc1067d45a777bd32e971c45, type: 3}
+  m_Script: {fileID: 11500000, guid: 52a2c740396bde54db94e5cfbcaeedfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heal: 10
+  itemType: 1
+  gemUIPrefab: {fileID: 0}
+  gemUIParent: {fileID: 0}
+  healAmount: 8
+--- !u!114 &6768321687885564498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5894985017901548066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ca5fc1940dc5140ad714f5dab3ada0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  X: 0
+  Y: 15
+  Z: 0

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3370623157076160213}
   - component: {fileID: 7664571678193050066}
   - component: {fileID: 3618253695315120709}
-  - component: {fileID: 5944259681824703171}
   - component: {fileID: 8214529166579308214}
   - component: {fileID: 1232585016859984656}
+  - component: {fileID: 4502696959379816804}
   m_Layer: 0
   m_Name: GemPickup
   m_TagString: Untagged
@@ -86,22 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5944259681824703171
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2548069718627791502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 606019b09348f784e89cfed5fa45eaac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gemUIPrefab: {fileID: 6793554211803269911, guid: 4f919385cd6f8fd4e9bd51e25f3b7021, type: 3}
-  uiParent: {fileID: 0}
-  pickUpClip: {fileID: 8300000, guid: 783f3bfb7d8f9a54fa76f6c0a51a53d8, type: 3}
-  soundPlayer: {fileID: 0}
 --- !u!135 &8214529166579308214
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -132,9 +116,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 2548069718627791502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2587303d45b9aa4a941c51fe39f1e1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 52a2c740396bde54db94e5cfbcaeedfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemType: 0
+  gemUIPrefab: {fileID: 6793554211803269911, guid: 4f919385cd6f8fd4e9bd51e25f3b7021, type: 3}
+  gemUIParent: {fileID: 0}
+  healAmount: 0
+--- !u!114 &4502696959379816804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2548069718627791502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ca5fc1940dc5140ad714f5dab3ada0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   X: 0
-  Y: 45
+  Y: 25
   Z: 0

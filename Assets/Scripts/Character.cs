@@ -9,7 +9,7 @@ public class Character : MonoBehaviour
     [Header("Stats")]
     public int curHp;
     public int maxHp;
-    public HealthBarUI healthbarUI;
+    public HealthBarUI healthBarUI;
     public TMP_Text healthPercentage;
 
     [Header("Attack")]
@@ -27,8 +27,6 @@ public class Character : MonoBehaviour
         curHp -= damageToTake;
 
         onTakeDamage?.Invoke();
-        if (curHp <= 0)
-            Die();
     }
 
     public void Heal(int healAmount)
@@ -38,10 +36,5 @@ public class Character : MonoBehaviour
 
         if (curHp >= maxHp)
             curHp = maxHp;
-    }
-
-    public void Die()
-    {
-        Destroy(gameObject);
     }
 }

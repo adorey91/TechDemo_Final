@@ -1502,6 +1502,7 @@ GameObject:
   - component: {fileID: 176491812}
   - component: {fileID: 176491815}
   - component: {fileID: 176491813}
+  - component: {fileID: 176491816}
   m_Layer: 7
   m_Name: ArenaTrigger
   m_TagString: Untagged
@@ -1553,6 +1554,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176491811}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &176491816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176491811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 093194b04eabb424eae2169963f82343, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &177988782
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,6 +1983,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd514909fe004f45b2364ae955d4580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthFill: {fileID: 276381184}
+  character: {fileID: 1292031436}
 --- !u!1001 &241943664
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2818,7 +2833,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.5, y: 31.725138, z: 0.5}
+  m_Size: {x: 0.8, y: 31.725138, z: 0.66850865}
   m_Center: {x: 0, y: 15.492568, z: 0}
 --- !u!114 &425227950
 MonoBehaviour:
@@ -2833,6 +2848,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
+  isPlayerOn: 0
+  isMoving: 0
 --- !u!82 &425227951
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3016,6 +3033,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 426192402}
+  - component: {fileID: 426192403}
   m_Layer: 7
   m_Name: ArenaCameraParent
   m_TagString: Untagged
@@ -3039,6 +3057,21 @@ Transform:
   - {fileID: 1110269819}
   m_Father: {fileID: 1046533270}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &426192403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426192401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97ca5fc1940dc5140ad714f5dab3ada0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  X: 0
+  Y: 15
+  Z: 0
 --- !u!1001 &429728444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4241,11 +4274,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4883762814713038, guid: baebdd3b26f756b4c8f1b2d2efe1cf42, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.4752
+      value: 1.8678982
       objectReference: {fileID: 0}
     - target: {fileID: 4883762814713038, guid: baebdd3b26f756b4c8f1b2d2efe1cf42, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.80667
+      value: 10.8067
       objectReference: {fileID: 0}
     - target: {fileID: 4883762814713038, guid: baebdd3b26f756b4c8f1b2d2efe1cf42, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4253,7 +4286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4883762814713038, guid: baebdd3b26f756b4c8f1b2d2efe1cf42, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.2266731
+      value: 0.834
       objectReference: {fileID: 0}
     - target: {fileID: 4883762814713038, guid: baebdd3b26f756b4c8f1b2d2efe1cf42, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4341,8 +4374,16 @@ PrefabInstance:
       value: 1.6890721
       objectReference: {fileID: 0}
     - target: {fileID: 4796727144638148, guid: bd97c05e714e4e44a95ebdeaa26a6c9f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.98024845
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796727144638148, guid: bd97c05e714e4e44a95ebdeaa26a6c9f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.8046457
+      objectReference: {fileID: 0}
+    - target: {fileID: 4796727144638148, guid: bd97c05e714e4e44a95ebdeaa26a6c9f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.473331
+      value: 12.473
       objectReference: {fileID: 0}
     - target: {fileID: 4796727144638148, guid: bd97c05e714e4e44a95ebdeaa26a6c9f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4350,7 +4391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4796727144638148, guid: bd97c05e714e4e44a95ebdeaa26a6c9f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.2266681
+      value: 0.8456
       objectReference: {fileID: 0}
     - target: {fileID: 4796727144638148, guid: bd97c05e714e4e44a95ebdeaa26a6c9f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4522,6 +4563,8 @@ MonoBehaviour:
   pauseUI: {fileID: 1542715403}
   controlsUI: {fileID: 1910239074}
   gameOverUI: {fileID: 1860089106}
+  arenaCamera: {fileID: 1110269818}
+  arenaScreen: {fileID: 1405515251}
 --- !u!1001 &763564413
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4821,11 +4864,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  interactionText: Press Enter to Make Everything Fall
   lever: {fileID: 462334840}
   leverRotationAngle: 50
   rotationDuration: 0.3
   switchToReset: {fileID: 33267681160198073}
-  leverRotated: 0
 --- !u!1 &858578994
 GameObject:
   m_ObjectHideFlags: 0
@@ -5476,7 +5519,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4796727144638148, guid: bd97c05e714e4e44a95ebdeaa26a6c9f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.495667
+      value: 12.496
       objectReference: {fileID: 0}
     - target: {fileID: 4796727144638148, guid: bd97c05e714e4e44a95ebdeaa26a6c9f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5484,7 +5527,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4796727144638148, guid: bd97c05e714e4e44a95ebdeaa26a6c9f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.7733307
+      value: -1.718
       objectReference: {fileID: 0}
     - target: {fileID: 4796727144638148, guid: bd97c05e714e4e44a95ebdeaa26a6c9f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7094,6 +7137,7 @@ GameObject:
   - component: {fileID: 1292031435}
   - component: {fileID: 1292031433}
   - component: {fileID: 1292031436}
+  - component: {fileID: 1292031437}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -7324,8 +7368,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 0
-  maxHp: 50
-  healthbarUI: {fileID: 226924991}
+  maxHp: 60
+  healthBarUI: {fileID: 226924991}
   healthPercentage: {fileID: 181974088}
   attackPrefab: {fileID: 7005957522399575909, guid: c1943b602e01df340a753bc9181883e9, type: 3}
   timeBetweenAttacks: 0.5
@@ -7345,6 +7389,19 @@ MonoBehaviour:
     m_Bits: 64
   InteractText: {fileID: 1955756881}
   escapeInteracted: 0
+--- !u!114 &1292031437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292031427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8445e77127c597f45bd411fcf81f2520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionText: {fileID: 93587879}
 --- !u!1001 &1305378638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10812,11 +10869,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4883762814713038, guid: baebdd3b26f756b4c8f1b2d2efe1cf42, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.4509
+      value: 4.42854
       objectReference: {fileID: 0}
     - target: {fileID: 4883762814713038, guid: baebdd3b26f756b4c8f1b2d2efe1cf42, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.80667
+      value: 10.8067
       objectReference: {fileID: 0}
     - target: {fileID: 4883762814713038, guid: baebdd3b26f756b4c8f1b2d2efe1cf42, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10824,7 +10881,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4883762814713038, guid: baebdd3b26f756b4c8f1b2d2efe1cf42, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.7733269
+      value: -1.7509
       objectReference: {fileID: 0}
     - target: {fileID: 4883762814713038, guid: baebdd3b26f756b4c8f1b2d2efe1cf42, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11160,8 +11217,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -250}
-  m_SizeDelta: {x: 400, y: 200}
+  m_AnchoredPosition: {x: 0, y: -200}
+  m_SizeDelta: {x: 700, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1955756881
 MonoBehaviour:
@@ -11210,12 +11267,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 80
   m_fontSizeBase: 40
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 80
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -12203,11 +12260,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  interactionText: Press Enter to Shut Off Gravity
   lever: {fileID: 1201173154812278}
   leverRotationAngle: 50
   rotationDuration: 0.3
   switchToReset: {fileID: 845666693}
-  leverRotated: 0
 --- !u!33 &33267681590129899
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -12229,11 +12286,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  interactionText: Press Enter to Reset Buildings
   lever: {fileID: 1201172473385509}
   leverRotationAngle: 50
   rotationDuration: 0.3
   switchToReset: {fileID: 33267681590129900}
-  leverRotated: 0
 --- !u!33 &33645149620208127
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -12304,7 +12361,7 @@ GameObject:
   - component: {fileID: 8256975948804751613}
   - component: {fileID: 1442835227360199369}
   m_Layer: 0
-  m_Name: HealthBG
+  m_Name: Enemy_HealthBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12766,12 +12823,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2698203311634651964}
-  - component: {fileID: 5853685665097653751}
   - component: {fileID: 3662885715288771091}
   - component: {fileID: 337328704997258998}
   - component: {fileID: 3394728393730888352}
   - component: {fileID: 4565978365570978365}
   - component: {fileID: 5853685665097653750}
+  - component: {fileID: 5853685665097653752}
+  - component: {fileID: 5853685665097653751}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -12858,7 +12916,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: -2.97
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -12950,16 +13008,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 4631016941244096704}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc89023d815fa5443be0aa7781a4f01e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 50
+--- !u!114 &5853685665097653752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4631016941244096704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e21310d61f61f14b8448a0eb79a8726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   curHp: 0
-  maxHp: 20
-  healthbarUI: {fileID: 7511255082522456613}
+  maxHp: 40
+  healthBarUI: {fileID: 7511255082522456613}
   healthPercentage: {fileID: 0}
-  attackPrefab: {fileID: 0}
-  timeBetweenAttacks: 0
+  attackPrefab: {fileID: 7005957522399575909, guid: c1943b602e01df340a753bc9181883e9, type: 3}
+  timeBetweenAttacks: 1
   alreadyAttacked: 0
+  walkSpeed: 3
+  chaseSpeed: 5
+  runSpeed: 6
+  healthPanic: 3
+  enemyDistanceRun: 10
+  mesh: {fileID: 337328704997258998}
+  currentState: 0
+  wayPointPos: []
+  wayPointInc: 0
+  chaseRange: 12
+  searchDuration: 5
+  attackRange: 5
 --- !u!33 &6932279174394688205
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -13007,6 +13090,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbd514909fe004f45b2364ae955d4580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthFill: {fileID: 2475037489373125885}
+  character: {fileID: 5853685665097653752}
 --- !u!1 &7960795546971795464
 GameObject:
   m_ObjectHideFlags: 0
@@ -13065,7 +13150,7 @@ GameObject:
   - component: {fileID: 7026938429982563711}
   - component: {fileID: 2475037489373125885}
   m_Layer: 0
-  m_Name: HealthFill
+  m_Name: Enemy_HealthFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

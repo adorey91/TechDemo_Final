@@ -10,7 +10,7 @@ public class CollectableManager : MonoBehaviour
     private List<Vector3> gemPos = new()
     {
             new Vector3(6.55f, 1f, 3.33f),
-            new Vector3(17.15f, 2.5f, 15.13f),
+            new Vector3(15.75f, 2.5f, 15.13f),
             new Vector3(20.14f, 4f, 19.31f),
             new Vector3(20.14f, 8.4f, 19.31f),
             new Vector3(4.62f, 8.4f, 13.41f),
@@ -44,7 +44,8 @@ public class CollectableManager : MonoBehaviour
 
         if (gemInstanceClone == null && gemHolderCount < gemPos.Count)
         {
-           // InstantiateGem();
+           
+            InstantiateGem();
             gemHolderCount++;
         }
     }

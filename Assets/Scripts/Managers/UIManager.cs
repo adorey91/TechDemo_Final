@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     public GameObject pauseUI;
     public GameObject controlsUI;
     public GameObject gameOverUI;
+    public GameObject arenaCamera;
+    public GameObject arenaScreen;
 
 
     public void UI_Gameplay()
@@ -51,8 +53,16 @@ public class UIManager : MonoBehaviour
         pauseUI.SetActive(false);
         gameOverUI.SetActive(false);
         controlsUI.SetActive(false);
+        arenaCamera.SetActive(false);
+        arenaScreen.SetActive(false);
 
         activeUI.SetActive(true);
+
+        if(activeUI == arenaUI)
+        {
+            arenaCamera.SetActive(true);
+            arenaScreen.SetActive(true);
+        }
     }
 
     void PlayerMovement(CursorLockMode lockMode, bool visible, float time)
