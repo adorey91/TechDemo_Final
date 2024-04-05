@@ -20,6 +20,9 @@ public class Platform : MonoBehaviour
     internal bool startPlatform;
     [SerializeField] bool isPlayerOn = false;
     [SerializeField] bool isMoving = false;
+    bool isAudioPlaying;
+
+    SoundManager soundManager;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +30,7 @@ public class Platform : MonoBehaviour
         startPos = transform.position;
         endPos = new Vector3(-39.7f, 7.5f, 13.9f);
         gameManager = FindObjectOfType<GameManager>();
+        soundManager = FindObjectOfType<SoundManager>();
         player = FindObjectOfType<Player>();
     }
 
@@ -50,8 +54,16 @@ public class Platform : MonoBehaviour
         if (Vector3.Distance(transform.position, GetDestination()) < 0.1f)
         {
             moveCount++;
+            soundManager.StopPlaying(soundManager.platformAudio);
+            isAudioPlaying = false;
             startPlatform = false;
         }
+        else if (!isAudioPlaying)
+        {
+            soundManager.PlayPlatformAudio();
+            isAudioPlaying = true;
+        }
+
         transform.position = Vector3.MoveTowards(transform.position, GetDestination(), speed * Time.deltaTime);
     }
 

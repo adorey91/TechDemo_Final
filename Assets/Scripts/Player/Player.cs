@@ -61,7 +61,7 @@ public class Player : Character
         if (curHp <= 0)
             gameManager.LoadState("Gameover");
 
-        healthPercentage.text = $"{((float)curHp / (float)maxHp) * 100} %";
+        healthPercentage.text = $"{((float)curHp / (float)maxHp) * 100:F0} %";
     }
 
     void FixedUpdate()

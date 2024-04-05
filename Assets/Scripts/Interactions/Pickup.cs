@@ -17,7 +17,7 @@ public class Pickup : MonoBehaviour
 
     [Header("Heart Settings")]
     public int healAmount;
-
+    SoundManager soundManager;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +27,9 @@ public class Pickup : MonoBehaviour
             if (gemUIParent == null)
                 gemUIParent = GameObject.Find("GemHolder");
         }
+
+        if (soundManager == null)
+            soundManager = FindObjectOfType<SoundManager>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,10 +48,15 @@ public class Pickup : MonoBehaviour
 
     IEnumerator CollectHeart(Character hit)
     {
-        //maybe sound
+
         yield return new WaitForSeconds(0.3f);
-        if(hit !=  null)
+        if (hit != null)
         {
+            Debug.Log(hit.name);
+            if (hit.name == "Player")
+                soundManager.PlayerHealAudio();
+            else if (hit.name == "Enemy" || hit.name == "Enemy(Clone)")
+                soundManager.EnemyHealAudio();
             hit.Heal(healAmount);
             Destroy(gameObject);
         }
@@ -56,7 +64,7 @@ public class Pickup : MonoBehaviour
 
     IEnumerator CollectGem()
     {
-        //maybe sound at a later time.
+        soundManager.PlayCollectGem();
         yield return new WaitForSeconds(0.3f);
         AddGemUI();
         Destroy(this.gameObject);

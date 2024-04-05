@@ -36,11 +36,10 @@ public class Enemy : Character
     public State currentState;
 
     [Header("Patroling")]
-    // [SerializeField] Vector3[] wayPointPos = new Vector3[4];
-    [SerializeField] Transform[] wayPointPos;
-    [SerializeField] int wayPointInc;
+    public Transform[] wayPointPos;
+    public int wayPointInc;
     Vector3 lastPosition;
-    float distanceThreshold = 0.1f;
+    float distanceThreshold = 0.5f;
 
     [Header("Chasing")]
     [SerializeField] float chaseRange = 12;
@@ -57,6 +56,8 @@ public class Enemy : Character
 
     public void Start()
     {
+        soundManager = FindObjectOfType<SoundManager>();
+
         if (wayPointPos == null || wayPointPos.Length == 0)
         {
             GameObject[] patrolObjects = GameObject.FindGameObjectsWithTag("Patrol");

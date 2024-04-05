@@ -23,7 +23,11 @@ public class CollectableManager : MonoBehaviour
     [Header("Collectable Health")]
     public GameObject hearts;
     public GameObject arena;
+    private GameObject heartInstance;
 
+    public Transform[] heartPos = new Transform[4];
+
+    int heartCount = 0;
 
     void Start()
     {
@@ -33,6 +37,7 @@ public class CollectableManager : MonoBehaviour
     void Update()
     {
         CreateGem();
+        CreateHealth(); 
     }
 
     /// <summary>
@@ -44,10 +49,18 @@ public class CollectableManager : MonoBehaviour
 
         if (gemInstanceClone == null && gemHolderCount < gemPos.Count)
         {
-           
+
             InstantiateGem();
             gemHolderCount++;
         }
+    }
+
+    void CreateHealth()
+    {
+        heartInstance = GameObject.Find("HealingHeart(Clone)");
+
+        if(heartInstance == null)
+            SpawnHealing();
     }
 
     void InstantiateGem()
@@ -61,6 +74,9 @@ public class CollectableManager : MonoBehaviour
     /// </summary>
     public void SpawnHealing()
     {
-        Instantiate(hearts, arena.transform);
+        Instantiate(hearts, heartPos[heartCount].position,Quaternion.identity, arena.transform);
+        heartCount++;
+        if (heartCount > heartPos.Length - 1)
+            heartCount = 0;
     }
 }

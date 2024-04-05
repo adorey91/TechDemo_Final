@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    SoundManager soundManager;
     [SerializeField] private float moveSpeed;
     [SerializeField] private int damage;
     [SerializeField] private float lifeTime;
@@ -15,7 +16,7 @@ public class Projectile : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.velocity = transform.forward * moveSpeed;
-
+        soundManager = FindAnyObjectByType<SoundManager>();
         Destroy(gameObject, lifeTime);
     }
 
@@ -30,6 +31,12 @@ public class Projectile : MonoBehaviour
 
         if (hit != owner && hit != null)
         {
+            Debug.Log(hit.name);
+            if (hit.name == "Player")
+                soundManager.PlayerAttackedAudio();
+            else if(hit.name == "Enemy" || hit.name == "Enemy(Clone)")
+                soundManager.EnemyAttackedAudio();
+                
             hit.TakeDamage(damage);
             Destroy(gameObject);
         }

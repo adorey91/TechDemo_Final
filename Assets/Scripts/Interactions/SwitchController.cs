@@ -26,11 +26,13 @@ public class SwitchController : MonoBehaviour
 
     SwitchController[] allSwitches;
     BuildingManager buildingManager;
+    SoundManager soundManager;
 
     public void Start()
     {
         leverRotation = Quaternion.identity;
         buildingManager = FindAnyObjectByType<BuildingManager>();
+        soundManager = FindAnyObjectByType<SoundManager>();
 
         if (this.type == SwitchType.Reset)
         {
@@ -49,16 +51,19 @@ public class SwitchController : MonoBehaviour
         switch (type)
         {
             case SwitchType.Reset:
+                soundManager.PlayBuildingReset();
                 StartCoroutine(buildingManager.DestroyBuildings());
                 StartCoroutine(ReturnLever());
                 break;
             case SwitchType.GravityControl:
+                soundManager.PlayBuildingOther();
                 for (int i = 0; i < buildingManager.MazeRangeList.Count; i++)
                 {
                     buildingManager.MazeRangeList[i].useGravity = false;
                     buildingManager.MazeRangeList[i].isKinematic = false;
                 } break;
             case SwitchType.FallControl:
+                soundManager.PlayBuildingOther();
                 for (int i = 0; i < buildingManager.MazeRangeList.Count; i++)
                 {
                     buildingManager.MazeRangeList[i].useGravity = true;

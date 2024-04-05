@@ -6,6 +6,8 @@ using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
+    public SoundManager soundManager;
+
     [Header("Stats")]
     public int curHp;
     public int maxHp;
@@ -25,7 +27,6 @@ public class Character : MonoBehaviour
     public void TakeDamage(int damageToTake)
     {
         curHp -= damageToTake;
-
         onTakeDamage?.Invoke();
     }
 

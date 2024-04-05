@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
+    SoundManager soundManager;
     public bool IsOpen = false;
     [SerializeField] private bool IsRotatingDoor = true;
     [SerializeField] private float Speed = 1f;
@@ -24,6 +25,7 @@ public class Door : MonoBehaviour
 
     public void Awake()
     {
+        soundManager = FindObjectOfType<SoundManager>();
         StartRotation = transform.rotation.eulerAngles;
         Forward = transform.forward;
         StartPosition = transform.position;
@@ -57,6 +59,7 @@ public class Door : MonoBehaviour
             endRotation = Quaternion.Euler(new Vector3(0, StartRotation.y - RotationAmount, 0));
 
         IsOpen = true;
+        soundManager.PlayRotatingDoor();
         float time = 0;
         while (time < 1)
         {
@@ -72,6 +75,7 @@ public class Door : MonoBehaviour
         Vector3 startPosition = transform.position;
 
         IsOpen = true;
+        soundManager.PlaySlidingDoor();
         float time = 0;
         while (time < 1)
         {
@@ -101,7 +105,7 @@ public class Door : MonoBehaviour
         Quaternion endRotation = Quaternion.Euler(StartRotation);
 
         IsOpen = false;
-
+        soundManager.PlayRotatingDoor();
         float time = 0;
         while (time < 1)
         {
@@ -118,7 +122,7 @@ public class Door : MonoBehaviour
         float time = 0;
 
         IsOpen = false;
-
+        soundManager.PlaySlidingDoor();
         while (time < 1)
         {
             transform.position = Vector3.Lerp(startPosition, endPosition, time);
